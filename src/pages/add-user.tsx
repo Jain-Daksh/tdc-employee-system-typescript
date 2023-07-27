@@ -4,8 +4,7 @@ const AddUser = () => {
   return (
     <div>
       {/* <AddUserFrom /> */}
-      <AddUsers />
-      <h1>Users</h1>
+      <AddUsers name={''} email={''} password={''} organization={''} />
     </div>
   )
 }

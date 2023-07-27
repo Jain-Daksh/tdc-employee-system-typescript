@@ -43,11 +43,7 @@ const AddUsers: React.FC<User> = ({ name, email, password, organization }) => {
       style={{ maxWidth: 600 }}
       onFinish={onSubmitForm}
     >
-      <Form.Item
-        label="Normal label"
-        name="username"
-        rules={[{ required: true }]}
-      >
+      <Form.Item label="Name" name="Name" rules={[{ required: true }]}>
         <Input
           value={formData.name}
           onChange={e => setFormData({ ...formData, name: e.target.value })}
