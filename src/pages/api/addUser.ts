@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client'
+import { NextApiRequest, NextApiResponse } from 'next'
 const prisma = new PrismaClient()
- import { NextApiRequest, NextApiResponse } from 'next'
- 
+
 import bcrypt from 'bcrypt'
 
 export default async function handler(
@@ -12,7 +12,11 @@ export default async function handler(
     return res.status(405).json({ message: 'Method not allowed' })
   }
   const { name, password, email, organization } = req.body
+  const existingUser = await prisma.user.findUnique({ where: { email } })
 
+  if (existingUser) {
+    return res.status(409).json({ message: 'Email already exists' })
+  }
   try {
     const hashedPassword = await bcrypt.hash(password, 10)
 
