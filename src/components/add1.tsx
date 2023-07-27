@@ -1,9 +1,6 @@
-// import { PrismaClient } from '@prisma/client'
 import { Button, Form, Input, Radio, message } from 'antd'
 import axios from 'axios'
 import React, { useState } from 'react'
-
-// const prisma = new PrismaClient()
 
 const AddUserFormNew: React.FC = () => {
   const [form] = Form.useForm()
@@ -14,22 +11,6 @@ const AddUserFormNew: React.FC = () => {
     organization: '',
     roleId: ''
   })
-
-  const onFinish = async (values: any) => {
-    try {
-      const response = await axios.post('/api/addUser', formData)
-      console.log(response)
-      message.success('User added successfully!')
-      form.resetFields()
-    } catch (error) {
-      console.error(error)
-      message.error('Error adding user. Please try again later.')
-    }
-  }
-
-  const handleRadioChange = (event: any) => {
-    console.log('Selected Radio value:', event.target.value)
-  }
 
   const onSubmitForm = async (e: any) => {
     try {
@@ -42,45 +23,6 @@ const AddUserFormNew: React.FC = () => {
     }
   }
   return (
-    // <Form form={form} layout="vertical" onFinish={onSubmitForm}>
-    //   <Form.Item
-    //     label="Name"
-    //     name="name"
-    //     rules={[{ required: true, message: 'Please enter the name' }]}
-    //   >
-    //     <Input prefix={<UserOutlined />} placeholder="Enter name" />
-    //   </Form.Item>
-    //   <Form.Item
-    //     label="Age"
-    //     name="age"
-    //     rules={[{ required: true, message: 'Please enter the age' }]}
-    //   >
-    //     <Input type="number" placeholder="Enter age" />
-    //   </Form.Item>
-    //   <Form.Item
-    //     label="Address"
-    //     name="address"
-    //     rules={[{ required: true, message: 'Please enter the address' }]}
-    //   >
-    //     <Input placeholder="Enter address" />
-    //   </Form.Item>
-    // <Form.Item
-    //   label="Role"
-    //   name="role"
-    //   rules={[{ required: true, message: 'Please select the role' }]}
-    // >
-    //   <Select placeholder="Select role">
-    //     <Select.Option value="1">Role 1</Select.Option>
-    //     <Select.Option value="2">Role 2</Select.Option>
-    //     <Select.Option value="3">Role 3</Select.Option>
-    //   </Select>
-    // </Form.Item>
-    //   <Form.Item>
-    //     <Button type="primary" htmlType="submit">
-    //       Add User
-    //     </Button>
-    //   </Form.Item>
-    // </Form>
     <Form
       name="wrap"
       labelCol={{ flex: '110px' }}
@@ -155,10 +97,6 @@ const AddUserFormNew: React.FC = () => {
           <Radio value="1">Manager</Radio>
           <Radio value="2">Employee</Radio>
         </Radio.Group>
-        {/* <Select placeholder="Select role">
-          <Select.Option value="2">Manager</Select.Option>
-          <Select.Option value="1">Employee</Select.Option>
-        </Select> */}
       </Form.Item>
       <Form.Item label=" ">
         <Button type="primary" htmlType="submit">
