@@ -1,7 +1,8 @@
-import { UserOutlined } from '@ant-design/icons'
+import { DeleteOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Form, Modal, Pagination, Table } from 'antd'
 import Input from 'rc-input'
 import { useEffect, useState } from 'react'
+import EmployeesEditPage from './EditForm'
 
 const PAGE_SIZE = 10
 interface Users {
@@ -22,7 +23,7 @@ const EmployeesPage: React.FC = () => {
 
   const [editModalVisible, setEditModalVisible] = useState(false)
   const [editedUser, setEditedUser] = useState<Users | null>(null)
-
+  const [formData, setFormData] = useState([])
   const handleCancel = () => {
     setSelectedUser(null)
     setVisible(false)
@@ -46,7 +47,7 @@ const EmployeesPage: React.FC = () => {
     fetchUsers()
   }, [])
 
-  const handleEditUser = (employee: Users) => {
+  const handleEditUser = (employee: any) => {
     setSelectedUser(employee)
     setEditedUser({ ...employee })
     setEditModalVisible(true)
@@ -57,19 +58,60 @@ const EmployeesPage: React.FC = () => {
     setEditedUser(null)
   }
 
-   useEffect(() => {
-     async function Editusers() {
-       try {
-         const response = await fetch('/api/editUser/:id')
-         const data = await response.json()
-         console.log('data', data)
-         setEmployees(data)
-       } catch (error) {
-         console.error(error)
-       }
-     }
-     Editusers()
-   }, [])
+  // useEffect(() => {
+  //   async function Editusers() {
+  //     try {
+  //       const response = await fetch(`/api/editUser?id=${user.id}`)
+  //       const data = await response.json()
+  //       console.log('data', data)
+  //       setEmployees(data)
+  //     } catch (error) {
+  //       console.error(error)
+  //     }
+  //   }
+  //   Editusers()
+  // }, [])
+
+  // const handleEdit = async (user: any) => {
+  //   console.log('formData', formData)
+  //   const data = {
+  //     name: formData.name
+  //     // email: formData.email,
+  //     // password: formData.password,
+  //     // organization: formData.organization
+  //   }
+  //   try {
+  //     console.log('data', data)
+  //     await Axios({
+  //       method: 'PATCH',
+  //       url: `/api/editUser?id=${user.id}`,
+  //       data: data
+  //     })
+  //       .then(function (response) {
+  //         console.log(response)
+  //       })
+  //       .catch(function (response) {
+  //         console.log(response)
+  //       })
+  //     // }
+  //     // await fetch(`/api/editUser?id=${user.id}`, {
+  //     //   method: 'Put'
+  //     // })
+  //     // setEmployees(employees => employees.filter(u => u.id !== user.id))
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  // }
+  const handleDeleteUser = async (user: any) => {
+    try {
+      await fetch(`/api/deleteUser?id=${user.id}`, {
+        method: 'DELETE'
+      })
+      setEmployees(employees => employees.filter(u => u.id !== user.id))
+    } catch (error) {
+      console.error(error)
+    }
+  }
   const handleSaveEdit = () => {
     if (editedUser) {
       setEmployees(prevUsers => {
@@ -103,11 +145,6 @@ const EmployeesPage: React.FC = () => {
       dataIndex: 'email',
       key: 'email'
     },
-    // {
-    //   title: 'is_admin',
-    //   dataIndex: 'is_admin',
-    //   key: 'is_admin'
-    // },
     {
       title: 'Organization',
       dataIndex: 'organization',
@@ -130,7 +167,14 @@ const EmployeesPage: React.FC = () => {
             onClick={() => handleEditUser(employees)}
             style={{ marginLeft: 8 }}
           >
-            Edit
+            <EmployeesEditPage employees={employees} />
+          </Button>
+          <Button
+            icon={<DeleteOutlined />}
+            onClick={() => handleDeleteUser(employees)}
+            danger
+          >
+            Delete
           </Button>
         </>
       )
