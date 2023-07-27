@@ -57,9 +57,20 @@ const EmployeesPage: React.FC = () => {
     setEditedUser(null)
   }
 
+   useEffect(() => {
+     async function Editusers() {
+       try {
+         const response = await fetch('/api/editUser/:id')
+         const data = await response.json()
+         console.log('data', data)
+         setEmployees(data)
+       } catch (error) {
+         console.error(error)
+       }
+     }
+     Editusers()
+   }, [])
   const handleSaveEdit = () => {
-    // Save the edited user to the backend using API call
-    // For this example, we'll just update the user in the local state
     if (editedUser) {
       setEmployees(prevUsers => {
         const updatedUsers = prevUsers.map(user =>
