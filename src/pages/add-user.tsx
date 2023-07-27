@@ -1,7 +1,9 @@
+import AddUserFrom from '@/components/AddUser'
+
 const AddUser = () => {
   return (
     <div>
-      {/* <AddUserFrom /> */}
+      <AddUserFrom />
       <h1>Users</h1>
     </div>
   )
