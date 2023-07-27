@@ -24,7 +24,7 @@ const sidebar = [
   {
     id: 3,
     key: 3,
-    link: '/table',
+    link: '/user-table',
     Name: 'User Table'
   }
 ]
