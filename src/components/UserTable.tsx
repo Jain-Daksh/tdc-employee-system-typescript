@@ -198,13 +198,18 @@ import { useEffect, useState } from 'react'
 
 const PAGE_SIZE = 10
 
+interface Users {
+  name: string
+  email: string
+}
+
 const EmployeesPage: React.FC = () => {
   const [employees, setEmployees] = useState<any[]>([])
   const [totalEmployees, setTotalEmployees] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
 
   const [visible, setVisible] = useState(false)
-  const [selectedUser, setSelectedUser] = useState<any[] | null>(employees)
+  const [selectedUser, setSelectedUser] = useState<Users | null>()
 
   const handleCancel = () => {
     setSelectedUser(null)
