@@ -191,15 +191,29 @@
 
 // export default UserTable
 
-import { Pagination, Table } from 'antd'
+import { UserOutlined } from '@ant-design/icons'
+import { Button, Form, Modal, Pagination, Table } from 'antd'
+import Input from 'rc-input'
 import { useEffect, useState } from 'react'
 
 const PAGE_SIZE = 10
 
-const EmployeesPage = () => {
-  const [employees, setEmployees] = useState([])
+const EmployeesPage: React.FC = () => {
+  const [employees, setEmployees] = useState<any[]>([])
   const [totalEmployees, setTotalEmployees] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
+
+  const [visible, setVisible] = useState(false)
+  const [selectedUser, setSelectedUser] = useState<any[] | null>(employees)
+
+  const handleCancel = () => {
+    setSelectedUser(null)
+    setVisible(false)
+  }
+  const handleViewUser = (employee: any) => {
+    setSelectedUser(employee)
+    setVisible(true)
+  }
 
   useEffect(() => {
     async function fetchUsers() {
@@ -236,62 +250,70 @@ const EmployeesPage = () => {
       dataIndex: 'email',
       key: 'email'
     },
-    {
-      title: 'Admin',
-      dataIndex: 'is_admin',
-      key: 'is_admin'
-    },
+    // {
+    //   title: 'is_admin',
+    //   dataIndex: 'is_admin',
+    //   key: 'is_admin'
+    // },
     {
       title: 'Organization',
       dataIndex: 'organization',
       key: 'organization'
     },
     {
-      // title: 'Actions',
-      // key: 'actions',
-      // render: (_, user) => (
-      //   <div>
-      //     <a href={`/employees/${user.id}`}>View</a>
-      //     <span style={{ margin: '0 8px' }} />
-      //     <a href={`/employees/${user.id}/edit`}>Edit</a>
-      //   </div>
-      // )
       title: 'Actions',
       dataIndex: 'actions',
-      key: 'actions'
-      // render: (_, user) => (
-      //   <>
-      //     <Button icon={<UserOutlined />} onClick={() => handleViewUser(user)}>
-      //       View
-      //     </Button>
-      //     <Button
-      //       icon={<UserOutlined />}
-      //       onClick={() => handleEditUser(user)}
-      //       style={{ marginLeft: 8 }}
-      //     >
-      //       Edit
-      //     </Button>
-      //   </>
-      // )
+      key: 'actions',
+      render: (_: any, employees: string) => (
+        <>
+          <Button
+            icon={<UserOutlined />}
+            onClick={() => handleViewUser(employees)}
+          >
+            View
+          </Button>
+          {/* <Button
+            icon={<UserOutlined />}
+            onClick={() => handleEditUser(user)}
+            style={{ marginLeft: 8 }}
+          >
+            Edit
+          </Button> */}
+        </>
+      )
     }
-    // Add other columns as needed
   ]
 
   return (
-    <div>
-      <h1>Employee List</h1>
-      <Table
-        dataSource={employees}
-        columns={columns}
-        pagination={false} // Disable default table pagination
-      />
-      <Pagination
-        current={currentPage}
-        onChange={handlePageChange}
-        total={totalEmployees}
-        pageSize={PAGE_SIZE}
-      />
-    </div>
+    <>
+      <div>
+        <h1>Employee List</h1>
+        <Table dataSource={employees} columns={columns} pagination={false} />
+        <Pagination
+          current={currentPage}
+          onChange={handlePageChange}
+          total={totalEmployees}
+          pageSize={PAGE_SIZE}
+        />
+      </div>
+      <Modal
+        title="User Details"
+        open={visible}
+        onCancel={handleCancel}
+        footer={null}
+      >
+        {selectedUser && (
+          <Form layout="vertical">
+            <Form.Item label="Name">
+              <Input value={selectedUser.name} readOnly />
+            </Form.Item>
+            <Form.Item label="Email">
+              <Input value={selectedUser.email} readOnly />
+            </Form.Item>
+          </Form>
+        )}
+      </Modal>
+    </>
   )
 }
 
