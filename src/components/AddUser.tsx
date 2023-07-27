@@ -131,11 +131,21 @@
 
 // components/AddUserForm.js
 
-import { message } from 'antd'
+import { Button, Form, Input, message } from 'antd'
 import axios from 'axios'
 import { useState } from 'react'
-
-const AddUserForm = () => {
+interface User {
+  name: string
+  email: string
+  password: string
+  organization: string
+}
+const AddUserForm: React.FC<User> = ({
+  name,
+  email,
+  password,
+  organization
+}) => {
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
@@ -143,9 +153,21 @@ const AddUserForm = () => {
     password: '',
     organization: ''
   })
-
+  const validateMessages = {
+    required: '${label} is required!',
+    types: {
+      email: '${label} is not a valid email!',
+      number: '${label} is not a valid number!'
+    },
+    number: {
+      range: '${label} must be between ${min} and ${max}'
+    }
+  }
+  const onFinish = (values: any) => {
+    console.log(values)
+  }
   const onSubmitForm = async (e: any) => {
-    e.preventDefault()
+    // e.preventDefault()
     try {
       const response = await axios.post('/api/addUser', formData)
       console.log(response)
@@ -155,9 +177,66 @@ const AddUserForm = () => {
       message.error('Failed to add user.')
     }
   }
+  const layout = {
+    labelCol: { span: 8 },
+    wrapperCol: { span: 16 }
+  }
 
   return (
-    <form onSubmit={onSubmitForm}>
+    // <form onSubmit={onSubmitForm}>
+    //   <div>
+    //     <label>email</label>
+    //     <input
+    //       type="text"
+    //       aria-label="email field"
+    //       name="email"
+    //       value={formData.email}
+    //       onChange={e => setFormData({ ...formData, email: e.target.value })}
+    //     />
+    //   </div>
+    //   <div>
+    //     <label>password</label>
+    //     <input
+    //       type="password"
+    //       aria-label="password field"
+    //       name="password"
+    //       value={formData.password}
+    //       onChange={e => setFormData({ ...formData, password: e.target.value })}
+    //     />
+    //   </div>
+    //   <div>
+    //     <label>name</label>
+    //     <input
+    //       type="name"
+    //       aria-label="Confirm password field"
+    //       name="name"
+    //       value={formData.name}
+    //       onChange={e => setFormData({ ...formData, name: e.target.value })}
+    //     />
+    //   </div>
+    //   <div>
+    //     <label>Org</label>
+    //     <input
+    //       type="name"
+    //       aria-label="Confirm password field"
+    //       name="organization"
+    //       value={formData.organization}
+    //       onChange={e =>
+    //         setFormData({ ...formData, organization: e.target.value })
+    //       }
+    //     />
+    //   </div>
+    //   <div>
+    //     <button type="submit">Login</button>
+    //   </div>
+    // </form>
+    <Form
+      {...layout}
+      name="nest-messages"
+      onFinish={onSubmitForm}
+      style={{ maxWidth: 600 }}
+      validateMessages={validateMessages}
+    >
       <div>
         <label>email</label>
         <input
@@ -168,42 +247,29 @@ const AddUserForm = () => {
           onChange={e => setFormData({ ...formData, email: e.target.value })}
         />
       </div>
-      <div>
-        <label>password</label>
-        <input
-          type="password"
-          aria-label="password field"
-          name="password"
-          value={formData.password}
-          onChange={e => setFormData({ ...formData, password: e.target.value })}
-        />
-      </div>
-      <div>
-        <label>name</label>
-        <input
-          type="name"
-          aria-label="Confirm password field"
-          name="name"
-          value={formData.name}
-          onChange={e => setFormData({ ...formData, name: e.target.value })}
-        />
-      </div>
-      <div>
-        <label>Org</label>
-        <input
-          type="name"
-          aria-label="Confirm password field"
-          name="organization"
-          value={formData.organization}
-          onChange={e =>
-            setFormData({ ...formData, organization: e.target.value })
-          }
-        />
-      </div>
-      <div>
-        <button type="submit">Login</button>
-      </div>
-    </form>
+      <Form.Item
+        name={['user', 'email']}
+        label="Email"
+        rules={[{ type: 'email' }]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        name={['password', 'password']}
+        label="password"
+        rules={[{ required: true }]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item name={['user', 'introduction']} label="organization">
+        <Input.TextArea />
+      </Form.Item>
+      <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+        <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
   )
 }
 
