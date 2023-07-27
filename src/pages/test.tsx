@@ -6,9 +6,12 @@ interface Props {
 }
 
 const Person: React.FC<Props> = ({ name, age }) => {
+  
   return (
     <div>
-      <h1>dashboard</h1>
+      
+      <p>Name: {name}</p>
+      <p>Age: {age}</p>
     </div>
   )
 }
