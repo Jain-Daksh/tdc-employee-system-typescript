@@ -8,8 +8,7 @@ interface Props {
 const Person: React.FC<Props> = ({ name, age }) => {
   return (
     <div>
-      <p>Name: {name}</p>
-      <p>Age: {age}</p>
+      <h1>dashboard</h1>
     </div>
   )
 }
