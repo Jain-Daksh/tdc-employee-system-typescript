@@ -5,7 +5,7 @@ const { Sider, Content } = Layout
 
 interface Props {
   children: any
-  links: { label: string; href: string; color: string }[]
+  // links: { label: string; href: string; color: string }[]
 }
 
 const sidebar = [
@@ -28,7 +28,7 @@ const sidebar = [
     Name: 'User Table'
   }
 ]
-const Sidebar: React.FC<Props> = ({ children, links }) => {
+const Sidebar: React.FC<Props> = ({ children }) => {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider width={200} theme="light">
