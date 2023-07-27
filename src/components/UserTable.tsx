@@ -1,4 +1,4 @@
-import { UserOutlined } from '@ant-design/icons'
+import { DeleteOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Form, Modal, Pagination, Table } from 'antd'
 import Input from 'rc-input'
 import { useEffect, useState } from 'react'
@@ -57,19 +57,39 @@ const EmployeesPage: React.FC = () => {
     setEditedUser(null)
   }
 
-   useEffect(() => {
-     async function Editusers() {
-       try {
-         const response = await fetch('/api/editUser/:id')
-         const data = await response.json()
-         console.log('data', data)
-         setEmployees(data)
-       } catch (error) {
-         console.error(error)
-       }
-     }
-     Editusers()
-   }, [])
+  useEffect(() => {
+    async function Editusers() {
+      try {
+        const response = await fetch('/api/editUser/:id')
+        const data = await response.json()
+        console.log('data', data)
+        setEmployees(data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    Editusers()
+  }, [])
+
+  const handleDelete = async (id: string) => {
+    try {
+      const response = await fetch('/api/deleteUser/:id')
+      setEmployees(employees.filter(employees => employees.id !== id))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const handleDeleteUser = async (user: Users) => {
+    try {
+      await fetch(`/api/deleteUser?id=${user.id}`, {
+        method: 'DELETE'
+      })
+      setEmployees(employees => employees.filter(u => u.id !== user.id))
+    } catch (error) {
+      console.error(error)
+    }
+  }
   const handleSaveEdit = () => {
     if (editedUser) {
       setEmployees(prevUsers => {
@@ -131,6 +151,13 @@ const EmployeesPage: React.FC = () => {
             style={{ marginLeft: 8 }}
           >
             Edit
+          </Button>
+          <Button
+            icon={<DeleteOutlined />}
+            onClick={() => handleDeleteUser(employees)}
+            danger
+          >
+            Delete
           </Button>
         </>
       )
