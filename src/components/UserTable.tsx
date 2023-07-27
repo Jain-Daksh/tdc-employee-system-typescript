@@ -71,15 +71,6 @@ const EmployeesPage: React.FC = () => {
     Editusers()
   }, [])
 
-  const handleDelete = async (id: string) => {
-    try {
-      const response = await fetch('/api/deleteUser/:id')
-      setEmployees(employees.filter(employees => employees.id !== id))
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
   const handleDeleteUser = async (user: Users) => {
     try {
       await fetch(`/api/deleteUser?id=${user.id}`, {
@@ -123,11 +114,6 @@ const EmployeesPage: React.FC = () => {
       dataIndex: 'email',
       key: 'email'
     },
-    // {
-    //   title: 'is_admin',
-    //   dataIndex: 'is_admin',
-    //   key: 'is_admin'
-    // },
     {
       title: 'Organization',
       dataIndex: 'organization',
