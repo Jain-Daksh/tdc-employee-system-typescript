@@ -1,9 +1,11 @@
-import AddUsers from '@/components/add'
+import AddUserFormReportee from '@/components/addUserReportee'
 
 const AddUser = () => {
   return (
     <div>
-      <AddUsers name={''} email={''} password={''} organization={''} />
+      {/* <AddUsers name={''} email={''} password={''} organization={''} /> */}
+      {/* <AddUserFormNew /> */}
+      <AddUserFormReportee />
     </div>
   )
 }
