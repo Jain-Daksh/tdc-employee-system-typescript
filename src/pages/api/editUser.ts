@@ -1,5 +1,4 @@
 import { PrismaClient } from '@prisma/client'
-import bcrypt from 'bcrypt'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 const prisma = new PrismaClient()
@@ -8,19 +7,15 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method !== 'PATCH') {
+  if (req.method !== 'PUT') {
     return res.status(405).json({ message: 'Method not allowed' })
   }
 
   try {
-    const { id, name, password, email, organization } = req.body
+    const { id, name, email, organization } = req.body
 
     if (!email || !name || !organization) {
       return res.status(400).json({ message: 'All fields are required' })
-    }
-    let hashedPassword
-    if (password) {
-      hashedPassword = await bcrypt.hash(password, 10)
     }
 
     const user = await prisma.user.update({
@@ -28,8 +23,7 @@ export default async function handler(
       data: {
         name,
         email,
-        organization,
-        password: hashedPassword
+        organization
       }
     })
 
