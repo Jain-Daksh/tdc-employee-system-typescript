@@ -11,11 +11,15 @@ export default async function handler(
   }
 
   try {
-    const users = await prisma.user.findMany()
+    const users = await prisma.user.findMany({
+      include: {
+        role: true,
+        manager: true
+      }
+    })
     return res.status(200).json(users)
   } catch (error) {
     console.error(error)
     return res.status(500).json({ message: 'Something went wrong' })
   }
 }
-
