@@ -5,7 +5,6 @@ const { Sider, Content } = Layout
 
 interface Props {
   children: any
-  // links: { label: string; href: string; color: string }[]
 }
 
 const sidebar = [
@@ -30,11 +29,22 @@ const sidebar = [
   {
     id: 4,
     key: 4,
+    link: '/add-user-role',
+    Name: 'Add Reportee'
+  },
+  {
+    id: 5,
+    key: 5,
     link: '/manager-employee-table',
     Name: 'Manager Employee  Table'
   }
 ]
+
 const Sidebar: React.FC<Props> = ({ children }) => {
+  function handleClick() {
+    console.log('test')
+    localStorage.removeItem('authtoken')
+  }
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider width={200} theme="light">
@@ -58,6 +68,9 @@ const Sidebar: React.FC<Props> = ({ children }) => {
             </Link>
           ))}
         </Menu>
+        <br />
+        <hr />
+        <button onClick={handleClick}>LogOUT</button>
       </Sider>
       <Layout>
         <Content style={{ padding: '20px' }}>{children}</Content>
