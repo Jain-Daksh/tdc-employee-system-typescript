@@ -24,7 +24,7 @@ const Login = (props: any) => {
       if (response.ok) {
         const data = await response.json()
         const token = data.token
-        const admin = data.is_admin
+        const admin = data.user.is_admin
         localStorage.setItem('authtoken', token)
         localStorage.setItem('admin', admin)
         console.log(data)
