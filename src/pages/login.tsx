@@ -3,11 +3,11 @@ import { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 // import LoginImg from '../public/Login.avif'
 
-const Login = props => {
+const Login = (props: any) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleLogin = async e => {
+  const handleLogin = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
 
     try {
