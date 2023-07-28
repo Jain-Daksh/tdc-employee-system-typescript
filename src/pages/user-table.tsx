@@ -1,10 +1,13 @@
 import EmployeesPage from '@/components/UserTable'
+import ProtectedRoute from '@/utils/PrivateRoute'
 
 const Users = () => {
   return (
-    <div>
-      <EmployeesPage />
-    </div>
+    <ProtectedRoute>
+      <div>
+        <EmployeesPage />
+      </div>
+    </ProtectedRoute>
   )
 }
 
