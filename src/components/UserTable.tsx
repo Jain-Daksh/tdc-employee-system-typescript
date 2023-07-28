@@ -112,14 +112,22 @@ const EmployeesPage: React.FC = () => {
       console.error(error)
     }
   }
-  const handleSaveEdit = () => {
+  const handleSaveEdit = async (user: any) => {
     if (editedUser) {
       setEmployees(prevUsers => {
         const updatedUsers = prevUsers.map(user =>
           user.id === editedUser.id ? { ...user, ...editedUser } : user
         )
+        const requestOptions = {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updatedUsers)
+        }
+        fetch('https://reqres.in/api/articles/1', requestOptions)
+        setEmployees(updatedUsers)
         return updatedUsers
       })
+
       setEditModalVisible(false)
       setEditedUser(null)
     }
@@ -161,6 +169,12 @@ const EmployeesPage: React.FC = () => {
             onClick={() => handleViewUser(employees)}
           >
             View
+          </Button>
+          <Button
+            icon={<UserOutlined />}
+            onClick={() => handleEditUser(employees)}
+          >
+            EDit
           </Button>
           <Button
             icon={<UserOutlined />}
