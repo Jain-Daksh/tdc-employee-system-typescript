@@ -24,6 +24,11 @@ const EmployeesPage: React.FC = () => {
   const [editModalVisible, setEditModalVisible] = useState(false)
   const [editedUser, setEditedUser] = useState<Users | null>(null)
   const [formData, setFormData] = useState([])
+  const [editingUser, setEditingUser] = useState()
+  const [data, setData] = useState([])
+
+  // const [editingUser, setEditingUser] = useState(null)
+
   const handleCancel = () => {
     setSelectedUser(null)
     setVisible(false)
@@ -58,50 +63,6 @@ const EmployeesPage: React.FC = () => {
     setEditedUser(null)
   }
 
-  // useEffect(() => {
-  //   async function Editusers() {
-  //     try {
-  //       const response = await fetch(`/api/editUser?id=${user.id}`)
-  //       const data = await response.json()
-  //       console.log('data', data)
-  //       setEmployees(data)
-  //     } catch (error) {
-  //       console.error(error)
-  //     }
-  //   }
-  //   Editusers()
-  // }, [])
-
-  // const handleEdit = async (user: any) => {
-  //   console.log('formData', formData)
-  //   const data = {
-  //     name: formData.name
-  //     // email: formData.email,
-  //     // password: formData.password,
-  //     // organization: formData.organization
-  //   }
-  //   try {
-  //     console.log('data', data)
-  //     await Axios({
-  //       method: 'PATCH',
-  //       url: `/api/editUser?id=${user.id}`,
-  //       data: data
-  //     })
-  //       .then(function (response) {
-  //         console.log(response)
-  //       })
-  //       .catch(function (response) {
-  //         console.log(response)
-  //       })
-  //     // }
-  //     // await fetch(`/api/editUser?id=${user.id}`, {
-  //     //   method: 'Put'
-  //     // })
-  //     // setEmployees(employees => employees.filter(u => u.id !== user.id))
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // }
   const handleDeleteUser = async (user: any) => {
     try {
       await fetch(`/api/deleteUser?id=${user.id}`, {
@@ -112,18 +73,62 @@ const EmployeesPage: React.FC = () => {
       console.error(error)
     }
   }
-  const handleSaveEdit = () => {
+  // const handleSaveEdit = async (user: any) => {
+  //   if (editedUser) {
+  //     setEmployees(prevUsers => {
+  //       const updatedUsers = prevUsers.map(user =>
+  //         user.id === editedUser.id ? { ...user, ...editedUser } : user
+  //       )
+  //       console.log('updatedUsers', editedUser)
+  //       const requestOptions = {
+  //         method: 'PUT',
+  //         headers: { 'Content-Type': 'application/json' },
+  //         body: JSON.stringify(updatedUsers)
+  //       }
+  //       fetch(`/api/editUser?id=${user.id}`, requestOptions)
+  //       setEmployees(updatedUsers)
+  //       return updatedUsers
+  //     })
+
+  //     setEditModalVisible(false)
+  //     setEditedUser(null)
+  //   }
+  // }
+
+  const handleSaveEdit = async (user: any) => {
     if (editedUser) {
       setEmployees(prevUsers => {
         const updatedUsers = prevUsers.map(user =>
           user.id === editedUser.id ? { ...user, ...editedUser } : user
         )
+        console.log('updatedUsers', editedUser)
+        const requestOptions = {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updatedUsers)
+        }
+        fetch(`/api/editUser?id=${user.id}`, requestOptions)
+        setEmployees(updatedUsers)
         return updatedUsers
       })
+
       setEditModalVisible(false)
       setEditedUser(null)
     }
   }
+  // const handleSave = async (user: any) => {
+  //   try {
+  //     await axios.put(`/api/editUser?id=${user.id}`, editingUser)
+  //     const updatedData = employees.map(user =>
+  //       user.id === editingUser.id ? { ...user, ...editingUser } : user
+  //     )
+  //     setEmployees(updatedData)
+  //     //  editModalVisible(false)
+  //   } catch (error) {
+  //     console.error('Error updating user:', error)
+  //     // Handle error, show error message, etc.
+  //   }
+  // }
 
   const handlePageChange = (page: any) => {
     setCurrentPage(page)
@@ -151,6 +156,16 @@ const EmployeesPage: React.FC = () => {
       key: 'organization'
     },
     {
+      title: 'Role',
+      dataIndex: ['role', 'role'],
+      key: 'role'
+    },
+    {
+      title: 'Manager',
+      dataIndex: ['user_reportee', 'manager'],
+      key: 'manager'
+    },
+    {
       title: 'Actions',
       dataIndex: 'actions',
       key: 'actions',
@@ -161,6 +176,12 @@ const EmployeesPage: React.FC = () => {
             onClick={() => handleViewUser(employees)}
           >
             View
+          </Button>
+          <Button
+            icon={<UserOutlined />}
+            onClick={() => handleEditUser(employees)}
+          >
+            EDit
           </Button>
           <Button
             icon={<UserOutlined />}
@@ -229,9 +250,52 @@ const EmployeesPage: React.FC = () => {
                 }
               />
             </Form.Item>
+            <Form.Item label="Email">
+              <Input
+                value={editedUser.email}
+                onChange={e =>
+                  setEditedUser({ ...editedUser, email: e.target.value })
+                }
+              />
+            </Form.Item>
+            <Form.Item label="Organization">
+              <Input
+                value={editedUser.organization}
+                onChange={e =>
+                  setEditedUser({ ...editedUser, organization: e.target.value })
+                }
+              />
+            </Form.Item>
           </Form>
         )}
       </Modal>
+      {/* <Modal
+        title="Edit User"
+        visible={editModalVisible}
+        onCancel={handleCancelEdit}
+        onOk={handleSave}
+      >
+        {editingUser && (
+          <Form>
+            <Form.Item label="Name">
+              <Input
+                value={selectedUser.name}
+                onChange={e =>
+                  setEditedUser({ ...editedUser, name: e.target.value })
+                }
+              />
+            </Form.Item>
+            <Form.Item label="Name">
+              <Input
+                value={editingUser.name}
+                onChange={e =>
+                  setEditingUser({ ...editingUser, name: e.target.value })
+                }
+              />
+            </Form.Item>
+          </Form>
+        )}
+      </Modal> */}
     </>
   )
 }
