@@ -2,10 +2,12 @@ import { Button, Form, Input } from 'antd'
 import { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 // import LoginImg from '../public/Login.avif'
+import { useRouter } from 'next/router'
 
 const Login = (props: any) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const router = useRouter()
 
   const handleLogin = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
@@ -26,8 +28,8 @@ const Login = (props: any) => {
         localStorage.setItem('authtoken', token)
         localStorage.setItem('admin', admin)
         console.log(data)
-        console.log('Login successful!')
         console.log(response)
+        router.push('/')
       } else {
         console.log('Invalid email or password')
         toast.error('incorrect email or password')

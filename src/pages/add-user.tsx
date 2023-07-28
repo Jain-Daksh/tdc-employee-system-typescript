@@ -1,12 +1,15 @@
 import AddUserFormReportee from '@/components/addUserReportee'
+import ProtectedRoute from '@/utils/privateRoute'
 
 const AddUser = () => {
   return (
-    <div>
-      {/* <AddUsers name={''} email={''} password={''} organization={''} /> */}
-      {/* <AddUserFormNew /> */}
-      <AddUserFormReportee />
-    </div>
+    <ProtectedRoute>
+      <div>
+        {/* <AddUsers name={''} email={''} password={''} organization={''} /> */}
+        {/* <AddUserFormNew /> */}
+        <AddUserFormReportee />
+      </div>
+    </ProtectedRoute>
   )
 }
 
