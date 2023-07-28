@@ -19,3 +19,17 @@
   align-items: center;
   border-top: 1px solid rgba(0, 0, 0, 0.15);
 }
+
+
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+.sidebar {
+  flex: 0 0 200px; 
+}
+
+.content {
+  flex: 1; 
+}

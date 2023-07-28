@@ -49,7 +49,6 @@ export default async function handler(
   }
 
   try {
-    // const { name, password, email, organization, roleId } = req.body
     const { name, password, email, organization, roleId } = req.body
 
     const hashedPassword = await bcrypt.hash(password, 10)
@@ -60,7 +59,6 @@ export default async function handler(
         password: hashedPassword,
         organization,
         roleId: Number(roleId)
-        // roleId
       }
     })
 

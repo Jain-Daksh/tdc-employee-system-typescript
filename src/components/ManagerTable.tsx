@@ -1,5 +1,4 @@
-import { DeleteOutlined, UserOutlined } from '@ant-design/icons'
-import { Button, Form, Modal, Pagination, Table } from 'antd'
+import { Form, Modal, Pagination, Table } from 'antd'
 import Input from 'rc-input'
 import { useEffect, useState } from 'react'
 
@@ -12,7 +11,7 @@ interface Users {
 }
 
 const ManagerEmployeesPage: React.FC = () => {
-  const [employees, setEmployees] = useState<any[]>([])
+  const [employees, setEmployees] = useState<Users[]>([])
   const [totalEmployees, setTotalEmployees] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -81,29 +80,22 @@ const ManagerEmployeesPage: React.FC = () => {
       title: 'Manager Name',
       dataIndex: ['manager', 'name'],
       key: 'name'
-    },
-    {
-      title: 'Actions',
-      dataIndex: 'actions',
-      key: 'actions',
-      render: (_: any, employees: string) => (
-        <>
-          <Button
-            icon={<UserOutlined />}
-            onClick={() => handleViewUser(employees)}
-          >
-            View
-          </Button>
-          <Button
-            icon={<DeleteOutlined />}
-            onClick={() => handleDeleteUser(employees)}
-            danger
-          >
-            Delete
-          </Button>
-        </>
-      )
     }
+    // {
+    //   title: 'Actions',
+    //   dataIndex: 'actions',
+    //   key: 'actions',
+    //   render: (_: any, employees: string) => (
+    //     <>
+    //       <Button
+    //         icon={<UserOutlined />}
+    //         onClick={() => handleViewUser(employees)}
+    //       >
+    //         View
+    //       </Button>
+    //     </>
+    //   )
+    // }
   ]
 
   return (

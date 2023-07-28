@@ -42,7 +42,7 @@ export default async function handler(
   }
 
   try {
-    const { id } = req.query
+    const id = Array.isArray(req.query.id) ? req.query.id[0] : req.query.id
 
     if (!id) {
       return res.status(400).json({ message: 'User ID is required' })
