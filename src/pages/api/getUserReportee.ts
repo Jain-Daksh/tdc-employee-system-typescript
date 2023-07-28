@@ -11,10 +11,10 @@ export default async function handler(
   }
 
   try {
-    const users = await prisma.user.findMany({
+    const users = await prisma.user_reportee.findMany({
       include: {
-        role: true,
-        manager: true
+        manager: true,
+        reportee: true
       }
     })
     return res.status(200).json(users)

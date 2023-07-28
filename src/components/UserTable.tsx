@@ -151,6 +151,16 @@ const EmployeesPage: React.FC = () => {
       key: 'organization'
     },
     {
+      title: 'Role',
+      dataIndex: ['role', 'role'],
+      key: 'role'
+    },
+    {
+      title: 'Manager',
+      dataIndex: ['user_reportee', 'manager'],
+      key: 'manager'
+    },
+    {
       title: 'Actions',
       dataIndex: 'actions',
       key: 'actions',
