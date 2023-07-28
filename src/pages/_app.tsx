@@ -6,8 +6,8 @@
 //   return <Component {...pageProps} />
 // }
 
+import Sidebar from '@/components/SIdeBar'
 import 'antd/dist/reset.css' // Import Ant Design CSS
-import SIdeBar from '../components/SIdeBar'
 import '../styles/common.css'
 // import Login from './login'
 
@@ -22,9 +22,9 @@ const MyApp: React.FC<Props> = ({ Component, pageProps }) => {
   //   return <Login />
   // }
   return (
-    <SIdeBar>
+    <Sidebar>
       <Component {...pageProps} />
-    </SIdeBar>
+    </Sidebar>
   )
 }
 
