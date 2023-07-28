@@ -26,13 +26,13 @@ const EmployeesEditPage = ({ employees }) => {
     setEditedUser(null)
   }
 
-  console.log('employeesData', employeesData)
+  // console.log('employeesData', employeesData)
   useEffect(() => {
     async function Editusers() {
       try {
         const response = await fetch('/api/editUser/:id')
         const data = await response.json()
-        console.log('data', data)
+        // console.log('data', data)
         setEmployeesData(data)
       } catch (error) {
         console.error(error)
@@ -42,7 +42,7 @@ const EmployeesEditPage = ({ employees }) => {
   }, [])
 
   const handleSaveEdit = async (user: any) => {
-    console.log('formData', employeesData)
+    // console.log('formData', employeesData)
     const data = {
       name: employeesData.name
       // email: formData.email,
