@@ -31,7 +31,7 @@ export default async function handler(
       const token = jwt.sign({ userId: user.id }, secretKey, {
         expiresIn: '1h'
       })
-      return res.status(200).json({ token })
+      return res.status(200).json({ token, user })
     } else {
       return res.status(401).json({ message: 'Invalid email or password' })
     }

@@ -26,6 +26,12 @@ const sidebar = [
     key: 3,
     link: '/user-table',
     Name: 'User Table'
+  },
+  {
+    id: 4,
+    key: 4,
+    link: '/manager-employee-table',
+    Name: 'Manager Employee  Table'
   }
 ]
 const Sidebar: React.FC<Props> = ({ children }) => {
