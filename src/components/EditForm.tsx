@@ -10,17 +10,7 @@ const EmployeesEditPage = ({ employees }) => {
   const [visible, setVisible] = useState(false)
 
   const [editModalVisible, setEditModalVisible] = useState(false)
-  // const [selectedUser, setSelectedUser] = useState<Users | null>()
-  // const [userEdit, setUserEdit] = useState<Users | null>()
-  // const [editModalVisible, setEditModalVisible] = useState(false)
   const [editedUser, setEditedUser] = useState(employees)
-
-  // const handleEditUser = (employee: any) => {
-  //   setSelectedUser(employee)
-  //   setEditedUser({ ...employee })
-  //   setEditModalVisible(true)
-  // }
-
   const handleCancelEdit = () => {
     setEditModalVisible(false)
     setEditedUser(null)
@@ -45,9 +35,6 @@ const EmployeesEditPage = ({ employees }) => {
     console.log('formData', employeesData)
     const data = {
       name: employeesData.name
-      // email: formData.email,
-      // password: formData.password,
-      // organization: formData.organization
     }
     try {
       console.log('data', data)

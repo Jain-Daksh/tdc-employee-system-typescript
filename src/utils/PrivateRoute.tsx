@@ -1,7 +1,9 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-
-const ProtectedRoute = ({ children }) => {
+interface Props {
+  children: any
+}
+const ProtectedRoute: React.FC<Props> = ({ children }) => {
   const [authToken, setAuthToken] = useState('')
 
   const router = useRouter()

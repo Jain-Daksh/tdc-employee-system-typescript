@@ -12,8 +12,6 @@ const AddUserFormNew: React.FC = () => {
     roleId: ''
   })
 
-  
-
   const onSubmitForm = async (e: any) => {
     try {
       const response = await axios.post('/api/addUser', formData)
@@ -76,20 +74,6 @@ const AddUserFormNew: React.FC = () => {
             onChange={e => setFormData({ ...formData, email: e.target.value })}
           />
         </Form.Item>
-        {/* <Form.Item
-        label="Role"
-        name="roleId"
-        rules={[{ required: true, message: 'Please select the role' }]}
-      >
-        <Select placeholder="Select role">
-          <Select.Option value="1">Manager</Select.Option>
-          <Select.Option value="2">Employee</Select.Option>
-        </Select>
-        <Input
-          value={formData.roleId}
-          onChange={e => setFormData({ ...formData, roleId: e.target.value })}
-        />
-      </Form.Item> */}
         <Form.Item
           label="Role"
           name="roleId"
@@ -109,8 +93,6 @@ const AddUserFormNew: React.FC = () => {
           </Button>
         </Form.Item>
       </Form>
-
-     
     </>
   )
 }
