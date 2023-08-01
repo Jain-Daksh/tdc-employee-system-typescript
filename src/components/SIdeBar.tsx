@@ -1,7 +1,7 @@
 import { Layout, Menu } from 'antd'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-
+import { verifyUserToken } from '../utils/authVerify'
 const { Sider, Content } = Layout
 
 interface Props {
@@ -91,14 +91,33 @@ const nonAdminLinks = [
 
 const Sidebar: React.FC<Props> = ({ children }) => {
   const [role, setRole] = useState('')
+  const [isAdmin, setIsAdmin] = useState(false)
+  // useEffect(() => {
+  //   if (typeof window !== 'undefined') {
+
+  //     const userRole = localStorage.getItem('admin')
+  //     setRole(userRole)
+  //   }
+  // }, [])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const userRole = localStorage.getItem('admin')
-      setRole(userRole)
+      const token = localStorage.getItem('authtoken')
+      console.log(token)
+      const decodedToken: any = verifyUserToken(token)
+      console.log('decodedToken', decodedToken)
+      // const userRole = decodedToken.role
+      // setIsAdmin(userRole === 'admin')
+
+      // const userRole = localStorage.getItem('authtoken')
+      // const decodedToken: any = verifyToken('authtoken')
+      // console.log('decodedToken', decodedToken)
+      // const userRoles = decodedToken
+      // const role = userRole
+      // console.log('role effect', userRoles)
+      setRole(role)
     }
   }, [])
-
   console.log('role', role)
   const sidebarLinks = role === 'true' ? adminLinks : nonAdminLinks
 

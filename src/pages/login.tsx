@@ -1,8 +1,7 @@
 import { Button, Form, Input } from 'antd'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
-// import LoginImg from '../public/Login.avif'
-import { useRouter } from 'next/router'
 
 const Login = (props: any) => {
   const [email, setEmail] = useState('')
@@ -25,9 +24,10 @@ const Login = (props: any) => {
         const data = await response.json()
         const token = data.token
         const admin = data.user.is_admin
+        const role = data.user.is_admin
         localStorage.setItem('authtoken', token)
         localStorage.setItem('admin', admin)
-        console.log(data)
+        console.log(role)
         console.log('Login successful!')
         console.log(response)
         router.push('/')
