@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
 const prisma = new PrismaClient()
+const secretKey = process.env.SECRET_KEY!
 
 console.log(process.env.SECRET_KEY)
 export async function validateUserCredentials(email: string, password: string) {
@@ -26,7 +27,7 @@ export async function validateUserCredentials(email: string, password: string) {
 }
 
 export function generateJWTToken(userId: number) {
-  const token = jwt.sign({ id: userId }, process.env.SECRET_KEY, {
+  const token = jwt.sign({ id: userId }, secretKey, {
     expiresIn: '1d'
   })
   return token
