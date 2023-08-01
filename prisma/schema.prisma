@@ -19,7 +19,7 @@ model User {
   email        String          @unique @db.VarChar(65)
   password     String          @unique @db.VarChar(100)
   organization String          @db.VarChar(40)
-  is_admin     Boolean         @default(false)
+  // is_admin     Boolean         @default(false)
   role         Role            @relation(fields: [roleId], references: [id], onDelete: Cascade)
   roleId       Int
   created_at   DateTime        @default(now())
@@ -32,6 +32,7 @@ model User {
 enum role {
   Employee
   Manager
+  Admin
 }
 
 model user_reportee {

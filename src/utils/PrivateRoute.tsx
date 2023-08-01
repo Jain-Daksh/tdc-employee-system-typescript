@@ -59,14 +59,14 @@ export default ProtectedRoute
 //   const { req } = context
 //   const token = req.cookies.token
 
-//   if (!token) {
-//     return {
-//       redirect: {
-//         destination: '/login',
-//         permanent: false
-//       }
-//     }
-//   }
+  // if (!token) {
+  //   return {
+  //     redirect: {
+  //       destination: '/login',
+  //       permanent: false
+  //     }
+  //   }
+  // }
 
 //   const decodedToken = verifyToken(token)
 

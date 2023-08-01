@@ -10,6 +10,7 @@ import Sidebar from '@/components/SIdeBar'
 import 'antd/dist/reset.css' // Import Ant Design CSS
 import '../styles/common.css'
 // import Login from './login'
+import { SessionProvider } from 'next-auth/react'
 
 interface Props {
   Component: any
@@ -22,9 +23,11 @@ const MyApp: React.FC<Props> = ({ Component, pageProps }) => {
   //   return <Login />
   // }
   return (
-    <Sidebar>
-      <Component {...pageProps} />
-    </Sidebar>
+    <SessionProvider session={pageProps.session}>
+      <Sidebar>
+        <Component {...pageProps} />
+      </Sidebar>
+    </SessionProvider>
   )
 }
 
