@@ -10,7 +10,7 @@ const AddUserFormReportee: React.FC = () => {
 
   const onSubmitForm = async (e: any) => {
     try {
-      const response = await axios.post('/api/addReportee', formData)
+      const response = await axios.post('/api/reportee', formData)
       console.log(response)
       message.success('User added successfully!')
     } catch (error) {
@@ -37,11 +37,7 @@ const AddUserFormReportee: React.FC = () => {
           }
         />
       </Form.Item>
-      <Form.Item
-        label="organization"
-        name="organization"
-        rules={[{ required: true }]}
-      >
+      <Form.Item label="reportee" name="reportee" rules={[{ required: true }]}>
         <Input
           value={formData.reporteeId}
           onChange={e =>

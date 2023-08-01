@@ -85,6 +85,7 @@ const AddUserFormNew: React.FC = () => {
           >
             <Radio value="1">Manager</Radio>
             <Radio value="2">Employee</Radio>
+            <Radio value="3">Admin</Radio>
           </Radio.Group>
         </Form.Item>
         <Form.Item label=" ">

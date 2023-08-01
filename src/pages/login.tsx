@@ -1,86 +1,51 @@
-import { Button, Form, Input } from 'antd'
+import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
+import { toast, ToastContainer } from 'react-toastify'
 
-const Login = (props: any) => {
+export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const router = useRouter()
 
-  const handleLogin = async (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    const result = (await signIn('credentials', {
+      redirect: false,
+      email,
+      password
+    })) as { error?: string }
 
-    try {
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, password })
-      })
-
-      if (response.ok) {
-        const data = await response.json()
-        const token = data.token
-        const admin = data.user.is_admin
-        const role = data.user.is_admin
-        localStorage.setItem('authtoken', token)
-        localStorage.setItem('admin', admin)
-        console.log(role)
-        console.log('Login successful!')
-        console.log(response)
-        router.push('/')
-      } else {
-        console.log('Invalid email or password')
-        toast.error('incorrect email or password')
-      }
-    } catch (error) {
-      console.error('Error occurred:', error)
+    if (result.error) {
+      toast.error('Invalid email or password')
+    } else {
+      router.push('/')
     }
   }
+
   return (
-    <div className="login-page">
-      <div className="login-box">
-        <div className="illustration-wrapper">
-          {/* <Image height={700} width={700} src={LoginImg} alt="Login" /> */}
+    <div>
+      <h1>Login</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Email:</label>
+          <input
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+          />
         </div>
-        <form name="login-form" onSubmit={handleLogin}>
-          <p className="form-title">Welcome back</p>
-          <p>Login to the Dashboard</p>
-          <Form.Item
-            name="username"
-            rules={[{ required: true, message: 'Please input your username!' }]}
-          >
-            <Input
-              value={email}
-              onChange={(e: any) => setEmail(e.target.value)}
-            />
-          </Form.Item>
-          <Form.Item
-            name="password"
-            rules={[{ required: true, message: 'Please input your password!' }]}
-          >
-            <Input.Password
-              value={password}
-              onChange={(e: any) => setPassword(e.target.value)}
-            />
-          </Form.Item>
-          <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className="login-form-button"
-              onSubmit={handleLogin}
-            >
-              LOGIN
-            </Button>
-          </Form.Item>
-        </form>
-      </div>
-      <Toaster />
+        <div>
+          <label>Password:</label>
+          <input
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
+        </div>
+        <button type="submit">Sign in</button>
+      </form>
+      <ToastContainer />
     </div>
   )
 }
-
-export default Login

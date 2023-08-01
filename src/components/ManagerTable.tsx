@@ -1,4 +1,5 @@
 import { Form, Modal, Pagination, Table } from 'antd'
+import axios from 'axios'
 import Input from 'rc-input'
 import { useEffect, useState } from 'react'
 
@@ -27,30 +28,32 @@ const ManagerEmployeesPage: React.FC = () => {
     setVisible(true)
   }
 
+  // useEffect(() => {
+  //   async function fetchUsers() {
+  //     try {
+  //       const response = await fetch('/api/getUserReportee')
+  //       const data = await response.json()
+  //       console.log('data', data)
+  //       setEmployees(data)
+  //     } catch (error) {
+  //       console.error(error)
+  //     }
+  //   }
+  //   fetchUsers()
+  // }, [])
   useEffect(() => {
     async function fetchUsers() {
       try {
-        const response = await fetch('/api/getUserReportee')
-        const data = await response.json()
-        console.log('data', data)
-        setEmployees(data)
+        const response = await axios.get('/api/reportee/')
+        setEmployees(response.data)
       } catch (error) {
-        console.error(error)
+        console.error('Error fetching users:', error)
       }
     }
+
     fetchUsers()
   }, [])
 
-  const handleDeleteUser = async (user: any) => {
-    try {
-      await fetch(`/api/deleteUser?id=${user.id}`, {
-        method: 'DELETE'
-      })
-      setEmployees(employees => employees.filter(u => u.id !== user.id))
-    } catch (error) {
-      console.error(error)
-    }
-  }
   const handlePageChange = (page: any) => {
     setCurrentPage(page)
   }
@@ -81,21 +84,6 @@ const ManagerEmployeesPage: React.FC = () => {
       dataIndex: ['manager', 'name'],
       key: 'name'
     }
-    // {
-    //   title: 'Actions',
-    //   dataIndex: 'actions',
-    //   key: 'actions',
-    //   render: (_: any, employees: string) => (
-    //     <>
-    //       <Button
-    //         icon={<UserOutlined />}
-    //         onClick={() => handleViewUser(employees)}
-    //       >
-    //         View
-    //       </Button>
-    //     </>
-    //   )
-    // }
   ]
 
   return (

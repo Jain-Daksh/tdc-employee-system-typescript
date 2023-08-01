@@ -1,14 +1,21 @@
+import MainLayout from '@/components/SIdeBar'
 import AddUserFormReportee from '@/components/addUserReportee'
-import ProtectedRoute from '@/utils/PrivateRoute'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 
-const AddUserRole = () => {
+export default function ProtectedPage() {
+  const { data: session, status } = useSession()
+  const router = useRouter()
+  if (status === 'loading') {
+    return <div>Loading...</div>
+  }
+  if (!session) {
+    router.push('/login')
+    return null
+  }
   return (
-    <ProtectedRoute>
-      <div>
-        <AddUserFormReportee />
-      </div>
-    </ProtectedRoute>
+    <MainLayout>
+      <AddUserFormReportee />
+    </MainLayout>
   )
 }
-
-export default AddUserRole
