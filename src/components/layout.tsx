@@ -1,31 +1,21 @@
-import { useRouter } from 'next/router'
-import { FC, ReactNode, useEffect, useState } from 'react'
+import { Layout } from 'antd'
+import { ReactNode } from 'react'
 import Sidebar from './SIdeBar'
 
-const LayoutPage: FC<{children: ReactNode}> = ({ children }) => {
-  // const { authToken } = useAuth()
-  const [authToken, setAuthToken] = useState<string | null>('')
+const { Content } = Layout
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const token = window.localStorage.getItem('authtoken')
-      setAuthToken(token)
-    }
-  }, [])
-
-  const router = useRouter()
-
-  // console.log(authToken)
-  // Check if the user is on the login page
-  const isLoginPage = router.pathname === '/login'
-
+interface MyLayoutProps {
+  children: ReactNode
+}
+const MainLayout = ({ children }: MyLayoutProps) => {
   return (
-    <div>
-      {/* Conditionally render the Sidebar */}
-      {authToken && !isLoginPage && <Sidebar children={undefined} />}
-      <main className="content">{children}</main>
-    </div>
+    <Layout>
+      <Sidebar />
+      <Layout>
+        <Content>{children}</Content>
+      </Layout>
+    </Layout>
   )
 }
 
-export default LayoutPage
+export default MainLayout

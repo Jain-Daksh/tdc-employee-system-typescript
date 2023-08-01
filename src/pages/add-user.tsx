@@ -1,26 +1,21 @@
 import AddUserFormNew from '@/components/add1'
-import ProtectedRoute from '@/utils/PrivateRoute'
+import MainLayout from '@/components/SIdeBar'
+import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
 
-const AddUser = () => {
+export default function ProtectedPage() {
+  const { data: session, status } = useSession()
   const router = useRouter()
-  useEffect(() => {
-    if (!window) return
-    const userRole = localStorage.getItem('admin')
-    if (userRole !== 'true') router.push('/login')
-  }, [router])
-
+  if (status === 'loading') {
+    return <div>Loading...</div>
+  }
+  if (!session) {
+    router.push('/login')
+    return null
+  }
   return (
-    <ProtectedRoute>
-      {/* <LayoutPage> */}
-      <div>
-        {/* <AddUsers name={''} email={''} password={''} organization={''} /> */}
-        <AddUserFormNew />
-      </div>
-      {/* </LayoutPage> */}
-    </ProtectedRoute>
+    <MainLayout>
+      <AddUserFormNew />
+    </MainLayout>
   )
 }
-
-export default AddUser

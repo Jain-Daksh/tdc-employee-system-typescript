@@ -1,14 +1,21 @@
 import ManagerEmployeesPage from '@/components/ManagerTable'
-import ProtectedRoute from '@/utils/PrivateRoute'
+import MainLayout from '@/components/SIdeBar'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 
-const Users = () => {
+export default function ProtectedPage() {
+  const { data: session, status } = useSession()
+  const router = useRouter()
+  if (status === 'loading') {
+    return <div>Loading...</div>
+  }
+  if (!session) {
+    router.push('/login')
+    return null
+  }
   return (
-    <ProtectedRoute>
-      <div>
-        <ManagerEmployeesPage />
-      </div>
-    </ProtectedRoute>
+    <MainLayout>
+      <ManagerEmployeesPage />
+    </MainLayout>
   )
 }
-
-export default Users

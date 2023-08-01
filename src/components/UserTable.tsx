@@ -1,8 +1,7 @@
 import { DeleteOutlined, UserOutlined } from '@ant-design/icons'
-import { Button, Form, Modal, Pagination, Table } from 'antd'
-import Input from 'rc-input'
+import { Button, Form, Input, Modal, Pagination, Table } from 'antd'
+import axios from 'axios'
 import { useEffect, useState } from 'react'
-import EmployeesEditPage from './EditForm'
 
 const PAGE_SIZE = 10
 interface Users {
@@ -16,7 +15,7 @@ const EmployeesPage: React.FC = () => {
   const [employees, setEmployees] = useState<any[]>([])
   const [totalEmployees, setTotalEmployees] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
-
+  const [editingUser, setEditingUser] = useState(null)
   const [visible, setVisible] = useState(false)
   const [selectedUser, setSelectedUser] = useState<Users | null>()
   const [userEdit, setUserEdit] = useState<Users | null>()
@@ -33,17 +32,32 @@ const EmployeesPage: React.FC = () => {
     setVisible(true)
   }
 
+  // useEffect(() => {
+  //   async function fetchUsers() {
+  //     try {
+  //       const response = await axios.get('/api/users')
+  //       const users = response.data
+  //       // const response = await fetch('/api/user/')
+  //       // const data = await response.json()
+  //       console.log('data', users)
+  //       setEmployees(users)
+  //     } catch (error) {
+  //       console.error(error)
+  //     }
+  //   }
+  //   fetchUsers()
+  // }, [])
   useEffect(() => {
     async function fetchUsers() {
       try {
-        const response = await fetch('/api/getUser')
-        const data = await response.json()
-        console.log('data', data)
-        setEmployees(data)
+        // Fetch users from the Prisma API
+        const response = await axios.get('/api/user/')
+        setEmployees(response.data)
       } catch (error) {
-        console.error(error)
+        console.error('Error fetching users:', error)
       }
     }
+
     fetchUsers()
   }, [])
 
@@ -102,9 +116,23 @@ const EmployeesPage: React.FC = () => {
   //     console.error(error)
   //   }
   // }
+
+  // const handleUpdateUser = async (id, data) => {
+  //   try {
+  //     await axios.put(`/api/updateUser`, { id, ...data })
+  //     const updatedUsers = users.map(user =>
+  //       user.id === id ? { ...user, ...data } : user
+  //     )
+  //     setUsers(updatedUsers)
+  //     setEditingUser(null)
+  //   } catch (error) {
+  //     console.error('Error updating user:', error)
+  //   }
+  // }
+
   const handleDeleteUser = async (user: any) => {
     try {
-      await fetch(`/api/deleteUser?id=${user.id}`, {
+      await fetch(`/api/user?id=${user.id}`, {
         method: 'DELETE'
       })
       setEmployees(employees => employees.filter(u => u.id !== user.id))
@@ -112,18 +140,33 @@ const EmployeesPage: React.FC = () => {
       console.error(error)
     }
   }
-  const handleSaveEdit = () => {
-    if (editedUser) {
-      setEmployees(prevUsers => {
-        const updatedUsers = prevUsers.map(user =>
-          user.id === editedUser.id ? { ...user, ...editedUser } : user
-        )
-        return updatedUsers
-      })
-      setEditModalVisible(false)
-      setEditedUser(null)
-    }
-  }
+
+  // const handleSaveEdit = async (user: any) => {
+  //   // if (editedUser) {
+  //   //   const updatedUsers = user.map(uservalue =>
+  //   //     uservalue.id === editedUser.id ? { ...user, [field]: value } : user
+  //   //   )
+  //   //   setEmployees(updatedUsers)
+  //   //   // setEmployees(prevUsers => {
+  //   //   //   const updatedUsers = prevUsers.map(user =>
+  //   //   //     user.id === editedUser.id ? { ...user, ...editedUser } : user
+  //   //   //   )
+  //   //   //   return updatedUsers
+  //   //   // })
+  //   //   setEditModalVisible(false)
+  //   //   setEditedUser(null)
+  //   // }
+  //   try {
+  //     await axios.put(`/api/updateUser`, { id, ...data })
+  //     const updatedUsers = user.map(val =>
+  //       val.id === id ? { ...val, ...data } : val
+  //     )
+  //     setUsers(updatedUsers)
+  //     setEditingUser(null)
+  //   } catch (error) {
+  //     console.error('Error updating user:', error)
+  //   }
+  // }
 
   const handlePageChange = (page: any) => {
     setCurrentPage(page)
@@ -167,13 +210,13 @@ const EmployeesPage: React.FC = () => {
           >
             View
           </Button>
-          <Button
+          {/* <Button
             icon={<UserOutlined />}
             onClick={() => handleEditUser(employees)}
             style={{ marginLeft: 8 }}
           >
             <EmployeesEditPage employees={employees} />
-          </Button>
+          </Button> */}
           <Button
             icon={<DeleteOutlined />}
             onClick={() => handleDeleteUser(employees)}
@@ -218,8 +261,12 @@ const EmployeesPage: React.FC = () => {
           </Form>
         )}
       </Modal>
-      <Modal
+      {/* <Modal
         title="Edit User"
+        // visible={editModalVisible}
+        // onCancel={handleCancelEdit}
+        // onOk={handleSaveEdit}
+        // user={editingUser}
         visible={editModalVisible}
         onCancel={handleCancelEdit}
         onOk={handleSaveEdit}
@@ -236,7 +283,7 @@ const EmployeesPage: React.FC = () => {
             </Form.Item>
           </Form>
         )}
-      </Modal>
+      </Modal> */}
     </>
   )
 }
