@@ -15,10 +15,12 @@ export default function ProtectedPage() {
     router.push('/login')
     return null
   }
+  console.log(session?.user.name)
   return (
     <MainLayout>
-      <h1>Welcome,</h1>
-      <p>Name:</p>
+      <h1>Welcome to your dashboard</h1>
+      <p>Name: {session?.user.name}</p>
+      <p>Email: {session?.user.email}</p>
       <button onClick={() => signOut()}>Sign out</button>
     </MainLayout>
   )
