@@ -32,25 +32,9 @@ const EmployeesPage: React.FC = () => {
     setVisible(true)
   }
 
-  // useEffect(() => {
-  //   async function fetchUsers() {
-  //     try {
-  //       const response = await axios.get('/api/users')
-  //       const users = response.data
-  //       // const response = await fetch('/api/user/')
-  //       // const data = await response.json()
-  //       console.log('data', users)
-  //       setEmployees(users)
-  //     } catch (error) {
-  //       console.error(error)
-  //     }
-  //   }
-  //   fetchUsers()
-  // }, [])
   useEffect(() => {
     async function fetchUsers() {
       try {
-        // Fetch users from the Prisma API
         const response = await axios.get('/api/user/')
         setEmployees(response.data)
       } catch (error) {
@@ -60,75 +44,6 @@ const EmployeesPage: React.FC = () => {
 
     fetchUsers()
   }, [])
-
-  const handleEditUser = (employee: any) => {
-    setSelectedUser(employee)
-    setEditedUser({ ...employee })
-    setEditModalVisible(true)
-  }
-
-  const handleCancelEdit = () => {
-    setEditModalVisible(false)
-    setEditedUser(null)
-  }
-
-  // useEffect(() => {
-  //   async function Editusers() {
-  //     try {
-  //       const response = await fetch(`/api/editUser?id=${user.id}`)
-  //       const data = await response.json()
-  //       console.log('data', data)
-  //       setEmployees(data)
-  //     } catch (error) {
-  //       console.error(error)
-  //     }
-  //   }
-  //   Editusers()
-  // }, [])
-
-  // const handleEdit = async (user: any) => {
-  //   console.log('formData', formData)
-  //   const data = {
-  //     name: formData.name
-  //     // email: formData.email,
-  //     // password: formData.password,
-  //     // organization: formData.organization
-  //   }
-  //   try {
-  //     console.log('data', data)
-  //     await Axios({
-  //       method: 'PATCH',
-  //       url: `/api/editUser?id=${user.id}`,
-  //       data: data
-  //     })
-  //       .then(function (response) {
-  //         console.log(response)
-  //       })
-  //       .catch(function (response) {
-  //         console.log(response)
-  //       })
-  //     // }
-  //     // await fetch(`/api/editUser?id=${user.id}`, {
-  //     //   method: 'Put'
-  //     // })
-  //     // setEmployees(employees => employees.filter(u => u.id !== user.id))
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // }
-
-  // const handleUpdateUser = async (id, data) => {
-  //   try {
-  //     await axios.put(`/api/updateUser`, { id, ...data })
-  //     const updatedUsers = users.map(user =>
-  //       user.id === id ? { ...user, ...data } : user
-  //     )
-  //     setUsers(updatedUsers)
-  //     setEditingUser(null)
-  //   } catch (error) {
-  //     console.error('Error updating user:', error)
-  //   }
-  // }
 
   const handleDeleteUser = async (user: any) => {
     try {
@@ -140,34 +55,6 @@ const EmployeesPage: React.FC = () => {
       console.error(error)
     }
   }
-
-  // const handleSaveEdit = async (user: any) => {
-  //   // if (editedUser) {
-  //   //   const updatedUsers = user.map(uservalue =>
-  //   //     uservalue.id === editedUser.id ? { ...user, [field]: value } : user
-  //   //   )
-  //   //   setEmployees(updatedUsers)
-  //   //   // setEmployees(prevUsers => {
-  //   //   //   const updatedUsers = prevUsers.map(user =>
-  //   //   //     user.id === editedUser.id ? { ...user, ...editedUser } : user
-  //   //   //   )
-  //   //   //   return updatedUsers
-  //   //   // })
-  //   //   setEditModalVisible(false)
-  //   //   setEditedUser(null)
-  //   // }
-  //   try {
-  //     await axios.put(`/api/updateUser`, { id, ...data })
-  //     const updatedUsers = user.map(val =>
-  //       val.id === id ? { ...val, ...data } : val
-  //     )
-  //     setUsers(updatedUsers)
-  //     setEditingUser(null)
-  //   } catch (error) {
-  //     console.error('Error updating user:', error)
-  //   }
-  // }
-
   const handlePageChange = (page: any) => {
     setCurrentPage(page)
   }
@@ -210,13 +97,6 @@ const EmployeesPage: React.FC = () => {
           >
             View
           </Button>
-          {/* <Button
-            icon={<UserOutlined />}
-            onClick={() => handleEditUser(employees)}
-            style={{ marginLeft: 8 }}
-          >
-            <EmployeesEditPage employees={employees} />
-          </Button> */}
           <Button
             icon={<DeleteOutlined />}
             onClick={() => handleDeleteUser(employees)}
@@ -261,29 +141,6 @@ const EmployeesPage: React.FC = () => {
           </Form>
         )}
       </Modal>
-      {/* <Modal
-        title="Edit User"
-        // visible={editModalVisible}
-        // onCancel={handleCancelEdit}
-        // onOk={handleSaveEdit}
-        // user={editingUser}
-        visible={editModalVisible}
-        onCancel={handleCancelEdit}
-        onOk={handleSaveEdit}
-      >
-        {editedUser && (
-          <Form layout="vertical">
-            <Form.Item label="Name">
-              <Input
-                value={editedUser.name}
-                onChange={e =>
-                  setEditedUser({ ...editedUser, name: e.target.value })
-                }
-              />
-            </Form.Item>
-          </Form>
-        )}
-      </Modal> */}
     </>
   )
 }
