@@ -55,7 +55,7 @@ const EmployeesPage: React.FC = () => {
       console.error(error)
     }
   }
-  const handlePageChange = (page: any) => {
+  const handlePageChange = (page: number) => {
     setCurrentPage(page)
   }
 
@@ -118,7 +118,8 @@ const EmployeesPage: React.FC = () => {
           current={currentPage}
           onChange={handlePageChange}
           total={totalEmployees}
-          pageSize={PAGE_SIZE}
+          // pageSize={PAGE_SIZE}
+          pageSize={5}
         />
       </div>
       <Modal

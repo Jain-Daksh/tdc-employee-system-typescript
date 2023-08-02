@@ -29,20 +29,17 @@ async function seedUsers() {
   if (roles.length === 0) {
     const userRole = await prisma.role.create({
       data: {
-        id: 1,
-        name: 'Employee'
+        role: 'Admin'
       }
     })
     const managerRole = await prisma.role.create({
       data: {
-        id: 2,
-        name: 'Manager'
+        role: 'Manager'
       }
     })
     const adminRole = await prisma.role.create({
       data: {
-        id: 3,
-        name: 'Admin'
+        role: 'Admin'
       }
     })
 

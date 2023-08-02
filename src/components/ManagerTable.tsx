@@ -23,24 +23,8 @@ const ManagerEmployeesPage: React.FC = () => {
     setSelectedUser(null)
     setVisible(false)
   }
-  const handleViewUser = (employee: any) => {
-    setSelectedUser(employee)
-    setVisible(true)
-  }
 
-  // useEffect(() => {
-  //   async function fetchUsers() {
-  //     try {
-  //       const response = await fetch('/api/getUserReportee')
-  //       const data = await response.json()
-  //       console.log('data', data)
-  //       setEmployees(data)
-  //     } catch (error) {
-  //       console.error(error)
-  //     }
-  //   }
-  //   fetchUsers()
-  // }, [])
+
   useEffect(() => {
     async function fetchUsers() {
       try {

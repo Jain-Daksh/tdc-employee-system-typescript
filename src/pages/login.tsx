@@ -26,6 +26,7 @@ export default function LoginPage() {
   return (
     <div>
       <h1>Login</h1>
+      <h1>welcome back</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Email:</label>
