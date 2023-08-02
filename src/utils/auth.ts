@@ -22,7 +22,6 @@ export async function validateUserCredentials(email: string, password: string) {
   if (passwordMatch) {
     return user
   }
-
   return null
 }
 
