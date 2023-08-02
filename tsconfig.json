@@ -18,6 +18,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "jwt.js", "seeder/seed.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "jwt.js", "seeder/seed.ts"],
   "exclude": ["node_modules"]
 }
