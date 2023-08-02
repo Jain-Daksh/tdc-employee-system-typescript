@@ -11,7 +11,7 @@ interface MyLayoutProps {
 const Sidebar = ({ children }: MyLayoutProps) => {
   const { data: session, status } = useSession()
   console.log('rolesc', session)
-  const rol = session?.token?.role?.roleId
+  const rol = session?.user.roleId
   console.log('rol', rol)
   return (
     <div className="sidebar">
